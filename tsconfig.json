@@ -4,7 +4,12 @@
     "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "gulpfile.js"
+  ],
+  "filesGlob": [
+    "src/**/*.ts",
+    "!./node_modules/**/*.ts"
   ],
   "compilerOptions": {
     "target": "es6",

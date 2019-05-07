@@ -1,8 +1,8 @@
 ## Typescript Demo API
 
 - ### Development
-  - Build images ``docker-compose build``
-  - run `` docker-compose up ``
+  - Run compiler ``npm run dev``
+  - Open ``http://localhost:3000``
 - ### Production
   - Build the project ``npm run build``
   - Upload the ***dist*** folder
