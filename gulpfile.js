@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const clean = require('gulp-clean');
 const livereload = require('gulp-livereload');
 const nodemon = require("gulp-nodemon");
 const ts = require('gulp-typescript');
@@ -8,56 +7,36 @@ const ts = require('gulp-typescript');
 const env = process.argv.splice(process.execArgv.length + 2)[0] === '--prod' ? 'production' : 'development';
 const tsProject = ts.createProject('tsconfig.json');
 
-gulp.task('scripts', ['static'], () => {
-    const tsResult = tsProject.src()
-        .pipe(tsProject());
+gulp.task('scripts', () => {
+	const tsResult = tsProject.src()
+		.pipe(tsProject());
 
-    return tsResult.js
-        .pipe(gulp.dest('dist'));
+	return tsResult.js
+		.pipe(gulp.dest('dist'));
 });
 
-gulp.task('static', ['clean'], () => {
-    return gulp
-        .src(['src/**/*.json'])
-        .pipe(gulp.dest('dist'));
-});
-
-gulp.task('clean', () => {
-    return gulp
-        .src('dist')
-        .pipe(clean());
-});
-
-gulp.task('build', ['scripts']);
+gulp.task('build', gulp.series('scripts'));
 
 if (env === 'production') {
-    //Termina de compilar e fecha as tarefas
-    gulp.task('default', ['build'], () => {
-        setTimeout(() => {
-            console.log(`Build completed successfully!`);
-        }, 500);
-    });
+	gulp.task('default', gulp.series('build'));
 } else {
-    //Executa o build sempre que mudar qualquer arquivo json e ts
-    gulp.task('watch', ['build'], () => {
-        return gulp.watch(['src/**/*.ts', 'src/**/*.json'], ['build']);
-    });
+	gulp.watch(['src/**/*.ts', 'src/**/*.json'], gulp.series('build'));
 
-    //Reinicia o server com nodemon sempre que terminar a compilação
-    gulp.task('default', ['watch'], () => {
-        // listen for changes
-        livereload.listen();
+	gulp.task('nodemon', () => {
+		livereload.listen();
 
-        // configure nodemon
-        nodemon({
-            // the script to run the app
-            script: 'dist/server.js',
-            ext: 'js',
-            env: { 'NODE_ENV': 'development' }
-        }).on('restart', function () {
-            // when the app has restarted, run livereload.
-            gulp.src('dist/server.js')
-                .pipe(livereload());
-        });
-    });
+		// configure nodemon
+		nodemon({
+			// the script to run the app
+			script: 'dist/server.js',
+			ext: 'js',
+			env: { 'NODE_ENV': 'development' }
+		}).on('restart', function () {
+			// when the app has restarted, run livereload.
+			gulp.src('dist/server.js')
+				.pipe(livereload());
+		});
+	})
+
+	gulp.task('default', gulp.series('build',gulp.series('nodemon')));
 }
