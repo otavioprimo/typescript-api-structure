@@ -5,14 +5,18 @@ import * as cors from 'cors';
 import * as morgan from 'morgan';
 import * as validator from 'express-validator';
 import * as fileUpload from 'express-fileupload';
+import * as dotenv from 'dotenv';
+
 import auth from './middlewares/auth.middleware';
 import errorMiddleare from './middlewares/error.middleware';
 import routes from './resources/index';
 
 class App {
-  public app: express.Application;
+  // public app: express.Application;
+  public app: any;
 
-  constructor () {
+  constructor() {
+    dotenv.config();
     this.app = express();
     this.middleware();
     this.routes();

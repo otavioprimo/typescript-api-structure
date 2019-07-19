@@ -6,7 +6,7 @@ const router: Router = Router();
 
 router.post("/", userController.test)
 
-router.post('/login', userController.login);
+router.post('/v1/login', userController.login);
 
 router.use('/v1/user', router);
 export default router;

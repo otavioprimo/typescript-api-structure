@@ -1,14 +1,12 @@
 import * as cluster from 'cluster';
 import * as http from 'http';
-import * as dotenv from 'dotenv';
 import app from './app';
-import { resolve } from 'path';
 
 class Server {
   server: http.Server;
   private port: number = Number(process.env.PORT) || 3000;
 
-  constructor () {
+  constructor() {
   }
 
   start() {
@@ -31,7 +29,6 @@ class Server {
         });
       } else {
         this.server = http.createServer(app);
-        dotenv.config();
 
         this.server.listen(this.port, () => {
           console.log(`Listening on port ${this.port} with process ${process.pid}`);
@@ -42,8 +39,9 @@ class Server {
   }
 
   stop() {
-    return new Promise((reolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.server.close();
+      console.log("Server Closed");
       resolve();
     });
   }
