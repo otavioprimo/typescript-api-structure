@@ -1,4 +1,4 @@
-import { IsNumber, IsNumberString } from "class-validator";
+import { IsNumberString } from 'class-validator';
 
 class TestQuery {
   @IsNumberString()

@@ -1,11 +1,11 @@
-import "reflect-metadata";
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
-import * as morgan from 'morgan';
-import * as validator from 'express-validator';
-import * as fileUpload from 'express-fileupload';
-import * as dotenv from 'dotenv';
+import 'reflect-metadata';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import morgan from 'morgan';
+import validator from 'express-validator';
+import fileUpload from 'express-fileupload';
+import dotenv from 'dotenv';
 
 import auth from './middlewares/auth.middleware';
 import errorMiddleare from './middlewares/error.middleware';
@@ -13,7 +13,7 @@ import routes from './resources/index';
 
 class App {
   // public app: express.Application;
-  public app: any;
+  public app: express.Application;
 
   constructor() {
     dotenv.config();
@@ -22,13 +22,14 @@ class App {
     this.routes();
   }
 
-  routes() {
+  private routes(): void {
     this.app.use(routes);
   }
-  middleware() {
+
+  private middleware(): void {
     this.app.all('/*', (req, res, next) => {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Headers', 'X-Requested-With');
       next();
     });
 
@@ -42,7 +43,6 @@ class App {
     this.app.use(errorMiddleare);
     this.app.use(auth);
   }
-
 }
 
 export default new App().app;

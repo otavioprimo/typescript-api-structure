@@ -1,4 +1,4 @@
-/** 
+/**
  * @description Wraper of all routes
  * */
 import { Router } from 'express';

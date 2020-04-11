@@ -1,6 +1,6 @@
 class UserService {
-  findByEmail(id: string) {
-    return { _id: "3213312", email: "otavioprimo@gmail.com" };
+  findByEmail(): {_id, email} {
+    return { _id: '3213312', email: 'otavioprimo@gmail.com' };
   }
 }
 
