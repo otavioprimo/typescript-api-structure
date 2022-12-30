@@ -57,7 +57,7 @@
     "gulp-livereload": "^4.0.1",
     "gulp-nodemon": "^2.4.2",
     "gulp-typescript": "^5.0.1",
-    "mocha": "^6.2.0",
+    "mocha": "^10.2.0",
     "nodemon": "^1.18.10",
     "should": "^13.2.3",
     "supertest": "^4.0.2",
